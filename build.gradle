@@ -16,20 +16,13 @@ apply plugin: 'java'
 sourceCompatibility = javaVersion
 targetCompatibility = javaVersion
 
-sourceSets {
-    main {
-        java.srcDirs 'src'
-        resources.srcDir 'resources'
-    }
-}
-
 intellij {
     version ideaVersion
     pluginName 'TooltipRunner'
 }
 
-group 'org.jetbrains'
-version '1.2' // Plugin version
+group 'nl.capaxit'
+version '1.0' // Plugin version
 
 task wrapper(type: Wrapper) {
     gradleVersion = '2.2.1' //version required
