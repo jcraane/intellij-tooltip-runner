@@ -24,8 +24,6 @@ import org.jetbrains.annotations.NotNull;
  * Created by jamiecraane on 06/07/16.
  */
 public class TooltipRunnerRunConfiguration extends ApplicationConfiguration {
-    private TooltipExecutionResultPanel resultPanel;
-
     protected TooltipRunnerRunConfiguration(@NotNull Project project, @NotNull ConfigurationFactory factory, String name) {
         super(name, project, factory);
     }
@@ -43,6 +41,7 @@ public class TooltipRunnerRunConfiguration extends ApplicationConfiguration {
         private final Project project;
         private final Editor editor;
         private final String toolWindowId;
+        private StringBuilder sb;
 
         public MyConsoleViewBuilder(Project project, Editor editor, String toolWindowId) {
             this.project = project;
@@ -59,22 +58,33 @@ public class TooltipRunnerRunConfiguration extends ApplicationConfiguration {
                         @Override
                         public void run() {
                             ToolWindowManager.getInstance(getProject()).getToolWindow(toolWindowId).hide(null);
-                            if (!s.startsWith("/Library") && !s.contains("Process finished")) {
-//                                HintManager.getInstance().showInformationHint(editor, s);
-//                                todo do not create execution result panel each time but re-use.
-//                                 todo aggregate results so newlines are printed in same result window.
-//                                todo close popup on editor click or loose popup focus.
-//                                if (resultPanel == null) {
-                                    resultPanel = new TooltipExecutionResultPanel(project, s, editor);
-//                                }
 
-                                resultPanel.updateText(project, s);
+                            if (startProcessOutput(s)) {
+                                sb = new StringBuilder();
+                            }
+
+                            if (!startProcessOutput(s) && !endProcessOutput(s)) {
+                                sb.append(s);
+//                                todo close popup on editor click or loose popup focus.
+                            }
+
+                            if (endProcessOutput(s)) {
+                                new TooltipExecutionResultPanel(project, s, editor).updateText(project, sb.toString());
                             }
                         }
 
                     });
                 }
             };
+        }
+
+//        todo there must be a better way to determine if the process is started or terminated.
+        private boolean endProcessOutput(@NotNull String s) {
+            return s.contains("Process finished");
+        }
+
+        private boolean startProcessOutput(@NotNull String s) {
+            return s.startsWith("/Library");
         }
 
         @Override

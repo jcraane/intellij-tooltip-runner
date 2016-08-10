@@ -95,7 +95,8 @@ public class TooltipExecutionResultPanel extends NonOpaquePanel {
     }
 
     public JLabel createLabel(final String value) {
-        JLabel jLabel = new JLabel("<html>" + value + "</html>", SwingConstants.CENTER);
+//        todo size moet nog goed worden gezet
+        JLabel jLabel = new JLabel("<html>" + value.replaceAll("\n", "<\\br>") + "</html>", SwingConstants.CENTER);
         Font font = jLabel.getFont().deriveFont(Font.PLAIN, editor.getColorsScheme().getEditorFontSize());
         jLabel.setFont(font);
         return jLabel;
@@ -108,7 +109,6 @@ public class TooltipExecutionResultPanel extends NonOpaquePanel {
         result.getContent().invalidate();
         final IdeFrame ideFrame = WindowManager.getInstance().getIdeFrame(project);
         result.setLocation(computeLocation(ideFrame).getScreenPoint());
-//        result.setSize(getPreferredSize());
         result.getContent().repaint();
         showFinal();
     }
