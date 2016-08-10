@@ -17,6 +17,7 @@ import com.intellij.util.ui.Animator;
 import com.intellij.util.ui.UIUtil;
 
 import javax.swing.*;
+import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.MouseEvent;
 
@@ -46,12 +47,12 @@ public class TooltipExecutionResultPanel extends NonOpaquePanel {
         setBackground(background);
         setOpaque(true);
         resultPanel = new NonOpaquePanel(new FlowLayout(FlowLayout.CENTER, 0, 0));
+        resultPanel.setBorder(new EmptyBorder(10, 10, 10, 10));
         add(resultPanel, BorderLayout.CENTER);
         result = JBPopupFactory.getInstance().createComponentPopupBuilder(this, this)
                 .setAlpha(5.0F)
                 .setFocusable(false)
                 .setBelongsToGlobalPopupStack(false)
-                .setTitle("Hallo")
                 .setCancelKeyEnabled(false)
                 .setCancelOnClickOutside(true)
                 .createPopup();
@@ -95,6 +96,8 @@ public class TooltipExecutionResultPanel extends NonOpaquePanel {
 
     public JLabel createLabel(final String value) {
         JLabel jLabel = new JLabel("<html>" + value + "</html>", SwingConstants.CENTER);
+        Font font = jLabel.getFont().deriveFont(Font.PLAIN, editor.getColorsScheme().getEditorFontSize());
+        jLabel.setFont(font);
         return jLabel;
     }
 

@@ -24,6 +24,8 @@ import org.jetbrains.annotations.NotNull;
  * Created by jamiecraane on 06/07/16.
  */
 public class TooltipRunnerRunConfiguration extends ApplicationConfiguration {
+    private TooltipExecutionResultPanel resultPanel;
+
     protected TooltipRunnerRunConfiguration(@NotNull Project project, @NotNull ConfigurationFactory factory, String name) {
         super(name, project, factory);
     }
@@ -37,7 +39,7 @@ public class TooltipRunnerRunConfiguration extends ApplicationConfiguration {
         return state;
     }
 
-    public static class MyConsoleViewBuilder extends TextConsoleBuilder {
+    public class MyConsoleViewBuilder extends TextConsoleBuilder {
         private Project project;
         private Editor editor;
 
@@ -54,12 +56,22 @@ public class TooltipRunnerRunConfiguration extends ApplicationConfiguration {
                     ApplicationManager.getApplication().invokeLater(new Runnable() {
                         @Override
                         public void run() {
-                            ToolWindowManager.getInstance(getProject()).getToolWindow("Run").hide(null);
+                            hideDefaultRunToolWindow();
                             if (!s.startsWith("/Library") && !s.contains("Process finished")) {
 //                                HintManager.getInstance().showInformationHint(editor, s);
 //                                todo do not create execution result panel each time but re-use.
-                                new TooltipExecutionResultPanel(project, s, editor).updateText(project, s);
+//                                 todo aggregate results so newlines are printed in same result window.
+//                                todo close popup on editor click.
+//                                if (resultPanel == null) {
+                                    resultPanel = new TooltipExecutionResultPanel(project, s, editor);
+//                                }
+
+                                resultPanel.updateText(project, s);
                             }
+                        }
+
+                        private void hideDefaultRunToolWindow() {
+                            ToolWindowManager.getInstance(getProject()).getToolWindow("Run").hide(null);
                         }
                     });
                 }
