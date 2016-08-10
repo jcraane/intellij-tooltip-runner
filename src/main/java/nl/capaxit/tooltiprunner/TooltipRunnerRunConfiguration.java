@@ -65,11 +65,10 @@ public class TooltipRunnerRunConfiguration extends ApplicationConfiguration {
 
                             if (!startProcessOutput(s) && !endProcessOutput(s)) {
                                 sb.append(s);
-//                                todo close popup on editor click or loose popup focus.
                             }
 
                             if (endProcessOutput(s)) {
-                                new TooltipExecutionResultPanel(project, s, editor).updateText(project, sb.toString());
+                                new TooltipExecutionResultPanel(project, sb.toString(), editor);
                             }
                         }
 

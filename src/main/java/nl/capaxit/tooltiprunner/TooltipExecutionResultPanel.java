@@ -27,6 +27,8 @@ import java.awt.event.MouseEvent;
  * Created by jamiecraane on 09/08/16.
  */
 public class TooltipExecutionResultPanel extends NonOpaquePanel {
+    public static final int TEXT_FIELD_WIDTH_TOTAL_PADDING = 20;
+    public static final int EXTRA_HEIGHT = 20;
     private JBPopup result;
     public static final int HIDE_DELAY = 4 * 1000;
     private final Project project;
@@ -53,7 +55,7 @@ public class TooltipExecutionResultPanel extends NonOpaquePanel {
                 .setAlpha(5.0F)
                 .setFocusable(false)
                 .setBelongsToGlobalPopupStack(false)
-                .setCancelKeyEnabled(false)
+                .setCancelKeyEnabled(true)
                 .setCancelOnClickOutside(true)
                 .createPopup();
         resultPanel.add(createLabel(executionResult));
@@ -95,22 +97,22 @@ public class TooltipExecutionResultPanel extends NonOpaquePanel {
     }
 
     public JLabel createLabel(final String value) {
-//        todo size moet nog goed worden gezet
         JLabel jLabel = new JLabel("<html>" + value.replaceAll("\n", "<\\br>") + "</html>", SwingConstants.CENTER);
         Font font = jLabel.getFont().deriveFont(Font.PLAIN, editor.getColorsScheme().getEditorFontSize());
         jLabel.setFont(font);
+        final FontMetrics fontMetrics = getFontMetrics(jLabel.getFont());
+        final int height = jLabel.getPreferredSize().height + EXTRA_HEIGHT;
+        setPreferredSize(new Dimension(getWidthOfWidestText(value, fontMetrics), height));
         return jLabel;
     }
 
-    public void updateText(final Project project, final String executionResult) {
-        if (getHintWindow() == null) return;
-        resultPanel.removeAll();
-        resultPanel.add(createLabel(executionResult));
-        result.getContent().invalidate();
-        final IdeFrame ideFrame = WindowManager.getInstance().getIdeFrame(project);
-        result.setLocation(computeLocation(ideFrame).getScreenPoint());
-        result.getContent().repaint();
-        showFinal();
+    private int getWidthOfWidestText(final String value, final FontMetrics fontMetrics) {
+        int max = 0;
+        String[] parts = value.split("\n");
+        for (String part : parts) {
+            max = Math.max(max, fontMetrics.stringWidth(part));
+        }
+        return max + TEXT_FIELD_WIDTH_TOTAL_PADDING;
     }
 
     private void showFinal() {
@@ -128,7 +130,6 @@ public class TooltipExecutionResultPanel extends NonOpaquePanel {
     }
 
     private void fadeOut() {
-//        setVisible(false);
         if (phase != Phase.SHOWN) return;
         phase = Phase.FADING_OUT;
         Disposer.dispose(animator);
