@@ -17,6 +17,7 @@ import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.openapi.editor.Editor;
 import com.intellij.openapi.fileEditor.FileEditorManager;
 import com.intellij.openapi.project.Project;
+import com.intellij.openapi.wm.ToolWindowManager;
 import org.jetbrains.annotations.NotNull;
 
 /**
@@ -53,9 +54,10 @@ public class TooltipRunnerRunConfiguration extends ApplicationConfiguration {
                     ApplicationManager.getApplication().invokeLater(new Runnable() {
                         @Override
                         public void run() {
+                            ToolWindowManager.getInstance(getProject()).getToolWindow("Run").hide(null);
                             if (!s.startsWith("/Library") && !s.contains("Process finished")) {
 //                                HintManager.getInstance().showInformationHint(editor, s);
-//                                todo do not create execution result panel each time.
+//                                todo do not create execution result panel each time but re-use.
                                 new TooltipExecutionResultPanel(project, s, editor).updateText(project, s);
                             }
                         }

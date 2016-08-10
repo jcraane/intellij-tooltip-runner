@@ -5,6 +5,7 @@ import com.intellij.openapi.editor.Editor;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.ui.popup.JBPopup;
 import com.intellij.openapi.ui.popup.JBPopupFactory;
+import com.intellij.openapi.ui.popup.LightweightWindowEvent;
 import com.intellij.openapi.util.Disposer;
 import com.intellij.openapi.wm.IdeFrame;
 import com.intellij.openapi.wm.WindowManager;
@@ -17,6 +18,7 @@ import com.intellij.util.ui.UIUtil;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.MouseEvent;
 
 /**
  * Panel which displays the runnners execution result in a panel. Inspired by https://github.com/chashnikov/IntelliJ-presentation-assistant.
@@ -49,13 +51,27 @@ public class TooltipExecutionResultPanel extends NonOpaquePanel {
                 .setAlpha(5.0F)
                 .setFocusable(false)
                 .setBelongsToGlobalPopupStack(false)
+                .setTitle("Hallo")
                 .setCancelKeyEnabled(false)
+                .setCancelOnClickOutside(true)
                 .createPopup();
         resultPanel.add(createLabel(executionResult));
-        result.show(computeLocation(ideFrame));
+
+        resultPanel.addMouseListener(new EmptyMouseListener(){
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                fadeOut();
+            }
+        });
+        result.addListener(new EmptyJBPopupListener(){
+            @Override
+            public void onClosed(LightweightWindowEvent event) {
+                fadeOut();
+            }
+        });
 
         animator = new FadeInOutAnimator(true);
-//        result.show(computeLocation(ideFrame));
+        result.show(computeLocation(ideFrame));
         animator.resume();
 
     }
@@ -65,7 +81,7 @@ public class TooltipExecutionResultPanel extends NonOpaquePanel {
         Rectangle visibleRect = ideFrame.getComponent().getVisibleRect();
         Dimension popupSize = getPreferredSize();
         Caret currentCaret = editor.getCaretModel().getCurrentCaret();
-//        todo figure out caret position.
+//        todo figure out caret position in pixels.
         Point point = new Point(visibleRect.x + (visibleRect.width - popupSize.width) / 2, visibleRect.y + visibleRect.height / 2);
         return new RelativePoint(ideFrame.getComponent(), point);
     }
@@ -109,6 +125,7 @@ public class TooltipExecutionResultPanel extends NonOpaquePanel {
     }
 
     private void fadeOut() {
+//        setVisible(false);
         if (phase != Phase.SHOWN) return;
         phase = Phase.FADING_OUT;
         Disposer.dispose(animator);
@@ -126,7 +143,7 @@ public class TooltipExecutionResultPanel extends NonOpaquePanel {
 
         public void paintNow(int frame, int totalFrames, int cycle) {
             if (forward && phase != Phase.FADING_IN
-                    || !forward && phase != Phase.FADING_OUT) return;
+|| !forward && phase != Phase.FADING_OUT) return;
             setAlpha(hintAlpha + (1 - hintAlpha) * (totalFrames - frame) / totalFrames);
         }
 
@@ -141,7 +158,6 @@ public class TooltipExecutionResultPanel extends NonOpaquePanel {
         private void close() {
             Disposer.dispose(this);
         }
-
     }
 
 
