@@ -35,17 +35,19 @@ public class TooltipRunnerRunConfiguration extends ApplicationConfiguration {
         final JavaCommandLineState state = new JavaApplicationCommandLineState<ApplicationConfiguration>(this, env);
         JavaRunConfigurationModule module = getConfigurationModule();
         final Editor editor = FileEditorManager.getInstance(getProject()).getSelectedTextEditor();
-        state.setConsoleBuilder(new MyConsoleViewBuilder(getProject(), editor));
+        state.setConsoleBuilder(new MyConsoleViewBuilder(getProject(), editor, env.getExecutor().getToolWindowId()));
         return state;
     }
 
     public class MyConsoleViewBuilder extends TextConsoleBuilder {
-        private Project project;
-        private Editor editor;
+        private final Project project;
+        private final Editor editor;
+        private final String toolWindowId;
 
-        public MyConsoleViewBuilder(Project project, Editor editor) {
+        public MyConsoleViewBuilder(Project project, Editor editor, String toolWindowId) {
             this.project = project;
             this.editor = editor;
+            this.toolWindowId = toolWindowId;
         }
 
         @Override
@@ -56,12 +58,12 @@ public class TooltipRunnerRunConfiguration extends ApplicationConfiguration {
                     ApplicationManager.getApplication().invokeLater(new Runnable() {
                         @Override
                         public void run() {
-                            hideDefaultRunToolWindow();
+                            ToolWindowManager.getInstance(getProject()).getToolWindow(toolWindowId).hide(null);
                             if (!s.startsWith("/Library") && !s.contains("Process finished")) {
 //                                HintManager.getInstance().showInformationHint(editor, s);
 //                                todo do not create execution result panel each time but re-use.
 //                                 todo aggregate results so newlines are printed in same result window.
-//                                todo close popup on editor click.
+//                                todo close popup on editor click or loose popup focus.
 //                                if (resultPanel == null) {
                                     resultPanel = new TooltipExecutionResultPanel(project, s, editor);
 //                                }
@@ -70,9 +72,6 @@ public class TooltipRunnerRunConfiguration extends ApplicationConfiguration {
                             }
                         }
 
-                        private void hideDefaultRunToolWindow() {
-                            ToolWindowManager.getInstance(getProject()).getToolWindow("Run").hide(null);
-                        }
                     });
                 }
             };
