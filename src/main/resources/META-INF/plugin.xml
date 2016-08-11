@@ -1,6 +1,6 @@
 <idea-plugin version="2">
     <id>nl.capaxit.tooltiprunner</id>
-    <name>Plugin display name here</name>
+    <name>TooltipRunner</name>
     <version>1.0</version>
     <vendor email="jamie.craane@capaxit.nl" url="http://www.capaxit.nl">Capax IT</vendor>
 
@@ -17,7 +17,7 @@
     </change-notes>
 
     <!-- please see http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/build_number_ranges.html for description -->
-    <idea-version since-build="162.*" until-build="163.*"/>
+    <idea-version since-build="145.1" until-build="163.*"/>
 
     <!-- please see http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/plugin_compatibility.html
          on how to target different products -->
