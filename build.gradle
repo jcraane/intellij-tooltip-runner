@@ -16,9 +16,17 @@ apply plugin: 'java'
 sourceCompatibility = javaVersion
 targetCompatibility = javaVersion
 
+sourceSets {
+    main {
+        java.srcDirs 'src'
+        resources.srcDir 'resources'
+    }
+}
+
 intellij {
     version ideaVersion
     pluginName 'TooltipRunner'
+    updateSinceUntilBuild false
 }
 
 group 'nl.capaxit'

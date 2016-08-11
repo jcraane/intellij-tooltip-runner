@@ -3,6 +3,7 @@
     <name>TooltipRunner</name>
     <version>1.0</version>
     <vendor email="jamie.craane@capaxit.nl" url="http://www.capaxit.nl">Capax IT</vendor>
+    <idea-version since-build="145.1" until-build="163.*"/>
 
     <description><![CDATA[
       TooltipRunner plugin. Provides a new run configuration TooltipRunner which displays
@@ -15,15 +16,6 @@
       Initial version.<br>
     ]]>
     </change-notes>
-
-    <!-- please see http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/build_number_ranges.html for description -->
-    <idea-version since-build="145.1" until-build="163.*"/>
-
-    <!-- please see http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/plugin_compatibility.html
-         on how to target different products -->
-    <!-- uncomment to enable plugin in all products
-    <depends>com.intellij.modules.lang</depends>
-    -->
 
     <extensions defaultExtensionNs="com.intellij">
         <!-- Add your extensions here -->
