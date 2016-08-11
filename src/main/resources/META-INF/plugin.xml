@@ -1,5 +1,5 @@
 <idea-plugin version="2">
-    <id>com.your.company.unique.plugin.id</id>
+    <id>nl.capaxit.tooltiprunner</id>
     <name>Plugin display name here</name>
     <version>1.0</version>
     <vendor email="jamie.craane@capaxit.nl" url="http://www.capaxit.nl">Capax IT</vendor>
