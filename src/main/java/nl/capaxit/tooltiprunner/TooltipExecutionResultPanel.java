@@ -36,14 +36,12 @@ public class TooltipExecutionResultPanel extends NonOpaquePanel {
     private Alarm hideAlarm = new Alarm();
     private Animator animator;
     private JPanel resultPanel;
-    private final String executionResult;
     private Phase phase = Phase.FADING_IN;
     private float hintAlpha = (UIUtil.isUnderDarcula()) ? 0.05F : 0.1F;
 
     public TooltipExecutionResultPanel(final Project project, final String executionResult, final Editor editor) {
         this.project = project;
         this.editor = editor;
-        this.executionResult = executionResult;
         final IdeFrame ideFrame = WindowManager.getInstance().getIdeFrame(project);
         final JBColor background = new JBColor(new Color(186, 238, 186, 120), new Color(73, 117, 73));
         setBackground(background);
@@ -84,7 +82,6 @@ public class TooltipExecutionResultPanel extends NonOpaquePanel {
         Rectangle visibleRect = ideFrame.getComponent().getVisibleRect();
         Dimension popupSize = getPreferredSize();
         Caret currentCaret = editor.getCaretModel().getCurrentCaret();
-//        todo figure out caret position in pixels.
         Point point = new Point(visibleRect.x + (visibleRect.width - popupSize.width) / 2, visibleRect.y + visibleRect.height / 2);
         return new RelativePoint(ideFrame.getComponent(), point);
     }
@@ -146,8 +143,7 @@ public class TooltipExecutionResultPanel extends NonOpaquePanel {
         }
 
         public void paintNow(int frame, int totalFrames, int cycle) {
-            if (forward && phase != Phase.FADING_IN
-|| !forward && phase != Phase.FADING_OUT) return;
+            if (forward && phase != Phase.FADING_IN || !forward && phase != Phase.FADING_OUT) return;
             setAlpha(hintAlpha + (1 - hintAlpha) * (totalFrames - frame) / totalFrames);
         }
 
