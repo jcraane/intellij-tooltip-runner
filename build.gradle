@@ -27,3 +27,11 @@ version '1.0' // Plugin version
 task wrapper(type: Wrapper) {
     gradleVersion = '2.2.1' //version required
 }
+
+idea {
+    project {
+        jdkName = javaVersion
+        languageLevel = javaVersion
+        vcs = 'Git'
+    }
+}
