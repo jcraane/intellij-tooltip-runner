@@ -15,6 +15,8 @@ import org.jetbrains.annotations.Nullable;
 import javax.swing.*;
 
 /**
+ * todo refactor and see of we can take advantage of application configuration type.
+ *
  * Created by jamiecraane on 06/07/16.
  */
 public class TooltipRunConfigurationType implements ConfigurationType {
