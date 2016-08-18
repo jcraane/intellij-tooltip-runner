@@ -6,8 +6,8 @@ import com.intellij.execution.configurations.ConfigurationFactory;
 import com.intellij.execution.configurations.ConfigurationTypeUtil;
 import com.intellij.execution.configurations.ModuleBasedConfiguration;
 import com.intellij.execution.configurations.RunConfiguration;
-import com.intellij.icons.AllIcons;
 import com.intellij.openapi.project.Project;
+import nl.capaxit.tooltiprunner.icons.TooltipRunnerIcons;
 import org.jetbrains.annotations.NotNull;
 
 import javax.swing.*;
@@ -26,10 +26,10 @@ public class TooltipRunConfigurationType extends ApplicationConfigurationType {
         return "TooltipRunner";
     }
 
-//todo provide new icon.
+    //todo provide new icon.
     @Override
     public Icon getIcon() {
-        return AllIcons.General.Information;
+        return TooltipRunnerIcons.RUN_CONFIGURATION_TYPE;
     }
 
     @NotNull
@@ -49,7 +49,7 @@ public class TooltipRunConfigurationType extends ApplicationConfigurationType {
 
             @Override
             public void onNewConfigurationCreated(@NotNull RunConfiguration configuration) {
-                ((ModuleBasedConfiguration)configuration).onNewConfigurationCreated();
+                ((ModuleBasedConfiguration) configuration).onNewConfigurationCreated();
             }
         };
     }
