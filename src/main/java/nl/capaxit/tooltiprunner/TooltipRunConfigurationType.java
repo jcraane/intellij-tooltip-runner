@@ -2,24 +2,20 @@ package nl.capaxit.tooltiprunner;
 
 import com.intellij.execution.application.ApplicationConfigurationType;
 import com.intellij.execution.configuration.ConfigurationFactoryEx;
-import com.intellij.execution.configurations.*;
+import com.intellij.execution.configurations.ConfigurationFactory;
+import com.intellij.execution.configurations.ConfigurationTypeUtil;
+import com.intellij.execution.configurations.ModuleBasedConfiguration;
+import com.intellij.execution.configurations.RunConfiguration;
 import com.intellij.icons.AllIcons;
 import com.intellij.openapi.project.Project;
-import com.intellij.psi.PsiClass;
-import com.intellij.psi.PsiElement;
-import com.intellij.psi.PsiJavaFile;
-import com.intellij.psi.util.PsiMethodUtil;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 import javax.swing.*;
 
 /**
- * todo refactor and see of we can take advantage of application configuration type.
- *
  * Created by jamiecraane on 06/07/16.
  */
-public class TooltipRunConfigurationType implements ConfigurationType {
+public class TooltipRunConfigurationType extends ApplicationConfigurationType {
     @Override
     public String getDisplayName() {
         return "TooltipRunner";
@@ -30,6 +26,7 @@ public class TooltipRunConfigurationType implements ConfigurationType {
         return "TooltipRunner";
     }
 
+//todo provide new icon.
     @Override
     public Icon getIcon() {
         return AllIcons.General.Information;
@@ -62,30 +59,8 @@ public class TooltipRunConfigurationType implements ConfigurationType {
         return new ConfigurationFactory[]{myFactory};
     }
 
-    @Nullable
-    public static PsiClass getMainClass(PsiElement element) {
-        while (element != null) {
-            if (element instanceof PsiClass) {
-                final PsiClass aClass = (PsiClass)element;
-                if (PsiMethodUtil.findMainInClass(aClass) != null){
-                    return aClass;
-                }
-            } else if (element instanceof PsiJavaFile) {
-                final PsiJavaFile javaFile = (PsiJavaFile)element;
-                final PsiClass[] classes = javaFile.getClasses();
-                for (PsiClass aClass : classes) {
-                    if (PsiMethodUtil.findMainInClass(aClass) != null) {
-                        return aClass;
-                    }
-                }
-            }
-            element = element.getParent();
-        }
-        return null;
-    }
-
     @NotNull
-    public static ApplicationConfigurationType getInstance() {
-        return ConfigurationTypeUtil.findConfigurationType(ApplicationConfigurationType.class);
+    public static TooltipRunConfigurationType getInstance() {
+        return ConfigurationTypeUtil.findConfigurationType(TooltipRunConfigurationType.class);
     }
 }

@@ -20,5 +20,6 @@
     <extensions defaultExtensionNs="com.intellij">
         <!-- Add your extensions here -->
         <configurationType implementation="nl.capaxit.tooltiprunner.TooltipRunConfigurationType"/>
+        <!--<runConfigurationProducer implementation="nl.capaxit.tooltiprunner.TooltipRunnerProducer"/>-->
     </extensions>
 </idea-plugin>
