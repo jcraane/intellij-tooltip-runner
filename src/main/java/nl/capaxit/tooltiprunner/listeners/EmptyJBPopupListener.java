@@ -1,4 +1,4 @@
-package nl.capaxit.tooltiprunner;
+package nl.capaxit.tooltiprunner.listeners;
 
 import com.intellij.openapi.ui.popup.JBPopupListener;
 import com.intellij.openapi.ui.popup.LightweightWindowEvent;

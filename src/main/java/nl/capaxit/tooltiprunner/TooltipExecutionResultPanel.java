@@ -15,6 +15,8 @@ import com.intellij.ui.components.panels.NonOpaquePanel;
 import com.intellij.util.Alarm;
 import com.intellij.util.ui.Animator;
 import com.intellij.util.ui.UIUtil;
+import nl.capaxit.tooltiprunner.listeners.EmptyJBPopupListener;
+import nl.capaxit.tooltiprunner.listeners.EmptyMouseListener;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;

@@ -1,4 +1,4 @@
-package nl.capaxit.tooltiprunner;
+package nl.capaxit.tooltiprunner.listeners;
 
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
