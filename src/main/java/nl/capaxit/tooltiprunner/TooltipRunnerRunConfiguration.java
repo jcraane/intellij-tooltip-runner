@@ -60,26 +60,22 @@ public class TooltipRunnerRunConfiguration extends ApplicationConfiguration {
             return new ConsoleViewImpl(project, true) {
                 @Override
                 public void print(@NotNull String s, @NotNull ConsoleViewContentType contentType) {
-                    ApplicationManager.getApplication().invokeLater(new Runnable() {
-                        @Override
-                        public void run() {
-                            ToolWindowManager.getInstance(getProject()).getToolWindow(toolWindowId).hide(null);
+                    ApplicationManager.getApplication().invokeLater(() -> {
+                        ToolWindowManager.getInstance(getProject()).getToolWindow(toolWindowId).hide(null);
 
-                            if (firstTime) {
-                                sb = new StringBuilder();
-                            }
-
-                            if (!firstTime && !endProcessOutput(s)) {
-                                sb.append(s);
-                            }
-
-                            if (endProcessOutput(s)) {
-                                new TooltipExecutionResultPanel(project, sb.toString(), editor);
-                            }
-
-                            firstTime = false;
+                        if (firstTime) {
+                            sb = new StringBuilder();
                         }
 
+                        if (!firstTime && !endProcessOutput(s)) {
+                            sb.append(s);
+                        }
+
+                        if (endProcessOutput(s)) {
+                            new TooltipExecutionResultPanel(project, sb.toString(), editor);
+                        }
+
+                        firstTime = false;
                     });
                 }
             };
