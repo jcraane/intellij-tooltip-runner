@@ -2,7 +2,7 @@
     <id>nl.capaxit.tooltiprunner</id>
     <name>TooltipRunner</name>
     <version>1.1</version>
-    <vendor email="jamie.craane@capaxit.nl" url="http://www.capaxit.nl">Capax IT</vendor>
+    <vendor email="jcraane@gmail.com" url="http://www.capaxit.nl">Capax IT</vendor>
     <idea-version since-build="145.1" until-build="163.*"/>
 
     <description><![CDATA[
