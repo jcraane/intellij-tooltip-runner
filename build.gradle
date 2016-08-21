@@ -30,7 +30,7 @@ intellij {
 }
 
 group 'nl.capaxit'
-version '1.0' // Plugin version
+version pluginVersion // Plugin version
 
 task wrapper(type: Wrapper) {
     gradleVersion = '2.2.1' //version required
