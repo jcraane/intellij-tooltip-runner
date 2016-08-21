@@ -47,6 +47,7 @@ public class TooltipRunnerRunConfiguration extends ApplicationConfiguration {
         private final Editor editor;
         private final String toolWindowId;
         private StringBuilder sb;
+        private boolean firstTime = true;
 
         public MyConsoleViewBuilder(Project project, Editor editor, String toolWindowId) {
             this.project = project;
@@ -64,17 +65,19 @@ public class TooltipRunnerRunConfiguration extends ApplicationConfiguration {
                         public void run() {
                             ToolWindowManager.getInstance(getProject()).getToolWindow(toolWindowId).hide(null);
 
-                            if (startProcessOutput(s)) {
+                            if (firstTime) {
                                 sb = new StringBuilder();
                             }
 
-                            if (!startProcessOutput(s) && !endProcessOutput(s)) {
+                            if (!firstTime && !endProcessOutput(s)) {
                                 sb.append(s);
                             }
 
                             if (endProcessOutput(s)) {
                                 new TooltipExecutionResultPanel(project, sb.toString(), editor);
                             }
+
+                            firstTime = false;
                         }
 
                     });
@@ -85,10 +88,6 @@ public class TooltipRunnerRunConfiguration extends ApplicationConfiguration {
 //        todo there must be a better way to determine if the process is started or terminated.
         private boolean endProcessOutput(@NotNull String s) {
             return s.contains("Process finished");
-        }
-
-        private boolean startProcessOutput(@NotNull String s) {
-            return s.startsWith("/Library");
         }
 
         @Override
