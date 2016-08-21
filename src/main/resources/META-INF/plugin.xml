@@ -1,25 +1,42 @@
 <idea-plugin version="2">
     <id>nl.capaxit.tooltiprunner</id>
     <name>TooltipRunner</name>
-    <version>1.0</version>
+    <version>1.1</version>
     <vendor email="jamie.craane@capaxit.nl" url="http://www.capaxit.nl">Capax IT</vendor>
     <idea-version since-build="145.1" until-build="163.*"/>
 
     <description><![CDATA[
-      TooltipRunner plugin. Provides a new run configuration TooltipRunner which displays
-      the result of a Java main invocation as a tooltip. Great for presentations!<br>
-      Create a new Run configuration with type TooltipRunner and run the class with this
-      new run configuraiton.
+        <h4>TooltipRunner plugin</h4>
+        </br></br>
+        This plugin provides a new run configuration TooltipRunner which displays
+        the result of a Java main invocation as a tooltip. Great for presentations!
     ]]></description>
 
     <change-notes><![CDATA[
-      Initial version.<br>
+      <ul>
+        <li>Added a producer to easily run the TooltipRunner from context actions.</li>
+        <li>Added specific TooltipRunner icon.</li>
+      </ul>
     ]]>
     </change-notes>
 
     <extensions defaultExtensionNs="com.intellij">
-        <!-- Add your extensions here -->
         <configurationType implementation="nl.capaxit.tooltiprunner.TooltipRunConfigurationType"/>
-        <!--<runConfigurationProducer implementation="nl.capaxit.tooltiprunner.TooltipRunnerProducer"/>-->
+        <runConfigurationProducer implementation="nl.capaxit.tooltiprunner.TooltipRunnerProducer"/>
     </extensions>
+
+<!--
+    <actions>
+        <action class="nl.capaxit.tooltiprunner.TooltipRunnerAction"
+                id="nl.capaxit.tooltiprunner.action"
+                description="Runs the corrent class with the tooltip runner."
+                text="Run with TooltipRunner"
+                icon="/icons/tooltip_run_icon.png">
+            <add-to-group group-id="RunMenu" anchor="first"/>
+            <keyboard-shortcut keymap="$default" first-keystroke="alt ctrl T"/>
+            <keyboard-shortcut keymap="Mac OS X" first-keystroke="alt ctrl T"/>
+            <keyboard-shortcut keymap="Mac OS X 10.5+" first-keystroke="alt ctrl T"/>
+        </action>
+    </actions>
+-->
 </idea-plugin>

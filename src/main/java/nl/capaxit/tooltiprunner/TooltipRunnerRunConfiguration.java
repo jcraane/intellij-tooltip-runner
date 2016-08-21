@@ -5,7 +5,6 @@ import com.intellij.execution.Executor;
 import com.intellij.execution.application.ApplicationConfiguration;
 import com.intellij.execution.configurations.ConfigurationFactory;
 import com.intellij.execution.configurations.JavaCommandLineState;
-import com.intellij.execution.configurations.JavaRunConfigurationModule;
 import com.intellij.execution.configurations.RunProfileState;
 import com.intellij.execution.filters.Filter;
 import com.intellij.execution.filters.TextConsoleBuilder;
@@ -20,6 +19,8 @@ import com.intellij.openapi.project.Project;
 import com.intellij.openapi.wm.ToolWindowManager;
 import org.jetbrains.annotations.NotNull;
 
+import javax.swing.*;
+
 /**
  * Created by jamiecraane on 06/07/16.
  */
@@ -29,9 +30,13 @@ public class TooltipRunnerRunConfiguration extends ApplicationConfiguration {
     }
 
     @Override
+    public Icon getIcon() {
+        return super.getIcon();
+    }
+
+    @Override
     public RunProfileState getState(@NotNull final Executor executor, @NotNull final ExecutionEnvironment env) throws ExecutionException {
         final JavaCommandLineState state = new JavaApplicationCommandLineState<ApplicationConfiguration>(this, env);
-        JavaRunConfigurationModule module = getConfigurationModule();
         final Editor editor = FileEditorManager.getInstance(getProject()).getSelectedTextEditor();
         state.setConsoleBuilder(new MyConsoleViewBuilder(getProject(), editor, env.getExecutor().getToolWindowId()));
         return state;
