@@ -14,8 +14,7 @@
 
     <change-notes><![CDATA[
       <ul>
-        <li>Added a producer to easily run the TooltipRunner from context actions.</li>
-        <li>Added specific TooltipRunner icon.</li>
+        <li>Fixed a crash on Windows when running the plugin.</li>
       </ul>
     ]]>
     </change-notes>
