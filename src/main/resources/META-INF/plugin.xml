@@ -3,7 +3,7 @@
     <name>TooltipRunner</name>
     <version>1.1.3</version>
     <vendor email="jcraane@gmail.com" url="http://www.capaxit.nl">Capax IT</vendor>
-    <idea-version since-build="145.1" until-build="172.*"/>
+    <idea-version since-build="145.1" until-build="173.*"/>
 
     <description><![CDATA[
         <h4>TooltipRunner plugin</h4>
@@ -14,7 +14,7 @@
 
     <change-notes><![CDATA[
       <ul>
-        <li>Updated compatibility fir IntelliJ 2017.2 and higher.</li>
+        <li>Updated compatibility fir IntelliJ 2017.3 and higher.</li>
       </ul>
     ]]>
     </change-notes>
